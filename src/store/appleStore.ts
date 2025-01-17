@@ -1,11 +1,12 @@
 import { create } from "zustand";
 
 // 定义 Zustand 状态的类型
-interface AppleStore {
+type AppleStore = {
   price: number;
   count: number;
-  increment: () => void;
-  decrement: () => void;
+  // 加减分别传入不传入参数-两种示例
+  increment: (num: number) => void; // 传入参数
+  decrement: () => void; // 不传参数
   getTotal: () => number;
 }
 
@@ -13,10 +14,10 @@ interface AppleStore {
 const useAppleStore = create<AppleStore>((set, get) => ({
   price: 7.0,
   count: 10,
-  increment: () =>
+  increment: (num: number) =>
     set((state) => ({
       ...state,
-      count: state.count + 1,
+      count: state.count + num,
     })),
   decrement: () =>
     set((state) => ({

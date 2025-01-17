@@ -11,7 +11,7 @@ const Child1 = () => {
       <div>单价：{price}</div>
       <div>数量：{count}</div>
       <div>总价：{getTotal()}</div>
-      <div><button onClick={() => increment()}>数量+1</button> <button onClick={() => decrement()}>数量-1</button></div>
+      <div><button onClick={() => increment(1)}>数量+1</button> <button onClick={() => decrement()}>数量-1</button></div>
     </div>
   )
 }
