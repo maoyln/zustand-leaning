@@ -15,6 +15,7 @@ type AppleStore = {
 // 使用 Immer 中间件创建 Zustand 状态
 const useAppleStore = create<AppleStore>()(
   // 虽然代表爆红，但是是可以使用的
+  // 实际上使用的时候都可以提取封装配置
   immer(
     devtools(
       persist(
