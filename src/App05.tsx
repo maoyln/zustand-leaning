@@ -1,4 +1,4 @@
-import useAppleStore from "./store/appleStore04"
+import useAppleStore from "./store/appleStore05"
 import { useShallow } from 'zustand/react/shallow';
 
 const Child1 = () => {

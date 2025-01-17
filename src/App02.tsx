@@ -9,7 +9,7 @@ const Child1 = () => {
 
   return (
     <div>
-      <h1>zustand插件:immer</h1><hr />
+      <h1>zustand插件:immer,简化store的写法</h1><hr />
       <div>单价：{price}</div>
       <div>数量：{count}</div>
       <div>总价：{getTotal()}</div>
