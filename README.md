@@ -1,5 +1,12 @@
 # React + TypeScript + Vite
 
+## 创建项目
+```
+ npm create vite@latest zustand-leaning -- --template react-ts
+```
+
+  - 启动如果报错: 就需要查node版本是否过低或者vite版本是否过高
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
