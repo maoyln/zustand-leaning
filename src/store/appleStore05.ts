@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
+import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 // 定义 Zustand 状态的类型
 type AppleStore = {
@@ -52,6 +52,9 @@ const useAppleStore = create<AppleStore>()(
               Object.entries(state).filter(([key]) => key !== "count")
             ),
           // 如果只有一个字段不持久化，其他的都持久化, [上述代码只有color不吃酒话，其他的都持久化]
+
+          storage: createJSONStorage(() => sessionStorage) // 持久化位置
+
         }
       ),
       { enabled: true, name: "Apple Store" }
