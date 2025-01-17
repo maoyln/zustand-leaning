@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 // 定义 Zustand 状态的类型
 type AppleStore = {
@@ -39,7 +39,14 @@ const useAppleStore = create<AppleStore>()(
         state.count *= rate; // 直接修改 count 属性
       });
     },
-  }), {name: 'myAppleStore'}), {enabled: true, name: 'Apple Store'}))
+  }), {
+    name: 'myAppleStore',  // localStorage的key
+    partialize: (state) => ({ count: state.count, color: state.color }) // 返回的对象是持久化的内容，如果省略者全部持久化
+  }), {enabled: true, name: 'Apple Store'}))
 );
+
+// myAppleStore为localStorage的key
+// persist会把状态持久化存储到localStorage
+// devtools会在控制台打印日志
 
 export default useAppleStore;
