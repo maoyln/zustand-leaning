@@ -1,5 +1,10 @@
 import { create } from "zustand";
-import { createJSONStorage, devtools, persist } from "zustand/middleware";
+import {
+  createJSONStorage,
+  devtools,
+  persist,
+  subscribeWithSelector,
+} from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 // 定义 Zustand 状态的类型
 type AppleStore = {
@@ -18,44 +23,46 @@ const useAppleStore = create<AppleStore>()(
   // 实际上使用的时候都可以提取封装配置
   immer(
     devtools(
-      persist(
-        (set, get) => ({
-          price: 7.0,
-          count: 10,
-          color: "blue",
-          // 使用 Immer 的写法直接修改状态
-          increment: (num: number) =>
-            set((state) => {
-              state.count += num; // 直接修改 count 属性
-            }),
+      subscribeWithSelector(
+        // subscribeWithSelector订阅较少的内容
+        persist(
+          (set, get) => ({
+            price: 7.0,
+            count: 10,
+            color: "blue",
+            // 使用 Immer 的写法直接修改状态
+            increment: (num: number) =>
+              set((state) => {
+                state.count += num; // 直接修改 count 属性
+              }),
 
-          decrement: () =>
-            set((state) => {
-              state.count -= 1; // 直接修改 count 属性
-            }),
+            decrement: () =>
+              set((state) => {
+                state.count -= 1; // 直接修改 count 属性
+              }),
 
-          getTotal: () => get().count * get().price, // 读取状态
+            getTotal: () => get().count * get().price, // 读取状态
 
-          // 异步方法
-          async doubleCount() {
-            const rate = await Promise.resolve(2); // 模拟异步操作
-            set((state) => {
-              state.count *= rate; // 直接修改 count 属性
-            });
-          },
-        }),
-        {
-          name: "myAppleStore", // localStorage的key
-          // partialize: (state) => ({ count: state.count, color: state.color }) // 返回的对象是持久化的内容，如果省略者全部持久化
-          partialize: (state) =>
-            Object.fromEntries(
-              Object.entries(state).filter(([key]) => key !== "count")
-            ),
-          // 如果只有一个字段不持久化，其他的都持久化, [上述代码只有color不吃酒话，其他的都持久化]
+            // 异步方法
+            async doubleCount() {
+              const rate = await Promise.resolve(2); // 模拟异步操作
+              set((state) => {
+                state.count *= rate; // 直接修改 count 属性
+              });
+            },
+          }),
+          {
+            name: "myAppleStore", // localStorage的key
+            // partialize: (state) => ({ count: state.count, color: state.color }) // 返回的对象是持久化的内容，如果省略者全部持久化
+            partialize: (state) =>
+              Object.fromEntries(
+                Object.entries(state).filter(([key]) => key !== "count")
+              ),
+            // 如果只有一个字段不持久化，其他的都持久化, [上述代码只有color不吃酒话，其他的都持久化]
 
-          storage: createJSONStorage(() => sessionStorage) // 持久化位置
-
-        }
+            storage: createJSONStorage(() => sessionStorage), // 持久化位置
+          }
+        )
       ),
       { enabled: true, name: "Apple Store" }
     )
@@ -70,7 +77,6 @@ const useAppleStore = create<AppleStore>()(
 // devtools会在控制台打印日志
 
 export default useAppleStore;
-
 
 // 明确指定了 immer<AppleStore> 泛型类型，确保 immer 中间件正确识别状态结构。
 // 中间件嵌套顺序
