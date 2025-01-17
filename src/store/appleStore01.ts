@@ -9,6 +9,7 @@ type AppleStore = {
   increment: (num: number) => void; // 传入参数
   decrement: () => void; // 不传参数
   getTotal: () => number;
+  doubleCount: () => Promise<void>; // 异步方法
 }
 
 // 使用类型参数为 Zustand store 显式定义类型
@@ -26,6 +27,14 @@ const useAppleStore = create<AppleStore>((set, get) => ({
       count: state.count - 1,
     })),
   getTotal: () => get().count * get().price,
+
+  async doubleCount() {
+    const rate = await Promise.resolve(2);
+    set((state) => ({
+      ...state,
+      count: state.count * rate
+    }))
+  }
 }));
 
 export default useAppleStore;
