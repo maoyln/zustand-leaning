@@ -5,6 +5,7 @@ import { immer } from "zustand/middleware/immer";
 type AppleStore = {
   price: number;
   count: number;
+  color: string;
   increment: (num: number) => void; // 传入参数
   decrement: () => void; // 不传参数
   getTotal: () => number;
@@ -16,6 +17,8 @@ const useAppleStore = create<AppleStore>()(
   immer((set, get) => ({
     price: 7.0,
     count: 10,
+    color: 'blue',
+
 
     // 使用 Immer 的写法直接修改状态
     increment: (num: number) =>
