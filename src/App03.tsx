@@ -8,6 +8,7 @@ const Child1 = () => {
   const decrement = useAppleStore(state => state.decrement);
   const getTotal = useAppleStore(state => state.getTotal);
   const doubleCount = useAppleStore(state => state.doubleCount);
+  console.log('----Child1-----');
 
   return (
     <div>
