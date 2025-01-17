@@ -1,33 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import useAppleStore from "./store/appleStore"
+const Child1 = () => {
+  const price = useAppleStore(state => state.price);
+  const count = useAppleStore(state => state.count);
+  const increment = useAppleStore(state => state.increment);
+  const decrement = useAppleStore(state => state.decrement);
+  const getTotal = useAppleStore(state => state.getTotal);
+
+  return (
+    <div>
+      <div>单价：{price}</div>
+      <div>数量：{count}</div>
+      <div>总价：{getTotal()}</div>
+      <div><button onClick={() => increment()}>数量+1</button> <button onClick={() => decrement()}>数量-1</button></div>
+    </div>
+  )
+}
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Child1 />
     </>
   )
 }
