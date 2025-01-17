@@ -1,3 +1,4 @@
+// zustand的基本使用;
 import { create } from "zustand";
 
 // 定义 Zustand 状态的类型
