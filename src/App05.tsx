@@ -1,4 +1,4 @@
-import useAppleStore from "./store/appleStore03"
+import useAppleStore from "./store/appleStore04"
 import { useShallow } from 'zustand/react/shallow';
 
 const Child1 = () => {
@@ -12,7 +12,7 @@ const Child1 = () => {
 
   return (
     <div>
-      <h1>zustand使用简化</h1><hr />
+      <h1>zustand插件：persist【持久化存储】</h1><hr />
       <div>单价：{price}</div>
       <div>数量：{count}</div>
       <div>总价：{getTotal()}</div>
